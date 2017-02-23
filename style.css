@@ -18,42 +18,65 @@ body {
 
 .body_border {
 	position: fixed;
+	background-color: white;
 	left: 0;
 	right: 0;
 	margin-left: auto;
 	margin-right: auto;
-	width: 60%;
-	background-color: white;
 	margin-top: 250px ;
 	margin-bottom: 0px;
-	height: 70%;
+	width: 700px;
+	height: 700px;
 	box-shadow: 1px 1px 10px black;
 }
 
 .sms {
-	width: 90%;
+	width: 95%;
 	height: 35px;
 	background-color: white;
-	float: center;
-	margin-right: 5px;
-	margin-left: 5px;
+	margin:auto;
 	text-align: center;
 	border-bottom: solid 1px gray;
 	margin-top: 5px;
 }
 
 .sms_hover {
-	width: 90%;
+	width: 95%;
 	height: 35px;
 	background-color: white;
 	float: center;
-	margin-right: 5px;
-	margin-left: 5px;
+	margin:auto;
 	text-align: center;
 	border-bottom: solid 1px gray;
 	background-color: Gainsboro;
 	box-shadow: 1px 1px 10px black;
 	margin-top: 5px;
+}
+
+.lang {
+	content:url(http://tarhely.adatb.mik.uni-pannon.hu/~aqklk8/prolab/res/uk_flag.png);
+	position: fixed;
+	top:0;
+	right:0;
+	float: right;
+	margin-right: 20px;
+	margin-top: 30px;
+	border-radius:100%;
+	height:50px;
+	box-shadow: 1px 1px 10px black;		
+}
+
+.lang_hover {
+	content:url(http://tarhely.adatb.mik.uni-pannon.hu/~aqklk8/prolab/res/uk_flag.png);
+	position: fixed;
+	top:0;
+	right:0;
+	float: right;
+	margin-right: 20px;
+	margin-top: 30px;
+	border-radius:100%;
+	height:50px;
+	box-shadow: 1px 1px 25px black;		
 }
 
 .search_bar {
@@ -62,14 +85,25 @@ body {
 	right: 0;
 	margin-left: auto;
 	margin-right: auto;
+	margin-top: 125px ;
 	width: 540px;
 	background-color: white;
-	margin-top: 130px ;
-	margin-bottom: 0px;
 	height: 60px;
 	box-shadow: 1px 1px 10px black;
 	text-align: center;
 }
+
+.search_box {
+	font-size: 35px;
+	float: left;
+	border: none;
+	border-bottom: solid 3px;
+	margin-left: 5px;
+	margin-top: 5px;
+	width: 85%;
+	outline: none;
+}
+
 .search_icon {
 	content:url(http://tarhely.adatb.mik.uni-pannon.hu/~aqklk8/prolab/res/search_icon.png);
 	float: right;
@@ -79,7 +113,7 @@ body {
 	height:80%;
 	box-shadow: 1px 1px 10px black;		
 }
-
+ 
 .search_icon_hover {
 	content:url(http://tarhely.adatb.mik.uni-pannon.hu/~aqklk8/prolab/res/search_icon.png);
 	float: right;
@@ -89,7 +123,6 @@ body {
 	height:80%;
 	box-shadow: 1px 1px 25px black;
 }
-
 	
 .filter_boxes {
 	position: fixed;
@@ -113,6 +146,46 @@ body {
 	text-align: center;
 	box-shadow: 1px 1px 10px black;
 }
+
+.filter_box_hover{
+	width: 100px;
+	height: 35px;
+	background-color: white;
+	float: left;
+	margin-right: 5px;
+	margin-left: 5px;
+	text-align: center;
+	box-shadow: 1px 1px 30px black;
+}
+
+.submit_sms {
+	content:url(http://tarhely.adatb.mik.uni-pannon.hu/~aqklk8/prolab/res/submit_button.png);
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	float: right;
+	margin-bottom: 50px;
+	margin-right: 30px;
+	border-radius:100%;
+	height:65px;
+	box-shadow: 1px 1px 10px black;
+	background-color: #0072bc;
+}
+
+.submit_sms_hover {
+	content:url(http://tarhely.adatb.mik.uni-pannon.hu/~aqklk8/prolab/res/submit_button.png);
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	float: right;
+	margin-bottom: 50px;
+	margin-right: 30px;
+	border-radius:100%;
+	height:65px;
+	box-shadow: 1px 1px 25px black;
+	background-color: #0072bc;
+}
+
 
 h1 {
 	text-align: left;

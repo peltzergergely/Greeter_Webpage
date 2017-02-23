@@ -11,9 +11,11 @@
 		<div class="header">
 			<h1>GREETER</h1>
 			<h2>Ünnepi köszöntések - ha éppen semmi frappáns nem jut az eszedbe!</h2>
+			<div class="lang">
+			</div>
 			<div class="search_bar">
-				Keresés...
-				<div class="search_icon">
+				<input type="text" name= 'search' class='search_box' onfocus="if(this.value == 'Keresés...') { this.value = ''; }" value="Keresés..." />
+				<div class="search_icon"><input type="submit" name="" value=""></div>
 				</div>
 			</div>
 			<div class="filter_boxes">
@@ -23,11 +25,14 @@
 				<div class="filter_box">harom</div>
 				<div class="filter_box">negy</div>
 			</div>
+			
 			<div class="body_border">
 				<div class="sms">elsõ</div>
 				<div class="sms">második</div>
 				<div class="sms">harmadik</div>
 				<div class="sms">negyedik</div>
+			</div>
+			<div class="submit_sms">
 			</div>
 		</div>
 	</body>
