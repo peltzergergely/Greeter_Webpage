@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+Ôªø<!DOCTYPE html>
 <html>
 	<head>
 		<title>Greeter</title>
@@ -10,11 +10,11 @@
 	<body>
 		<div class="header">
 			<h1>GREETER</h1>
-			<h2>‹nnepi kˆszˆntÈsek - ha Èppen semmi frapp·ns nem jut az eszedbe!</h2>
+			<h2>√únnepi k√∂sz√∂nt√©sek - ha √©ppen semmi frapp√°ns nem jut az eszedbe!</h2>
 			<div class="lang">
 			</div>
 			<div class="search_bar">
-				<input type="text" name= 'search' class='search_box' onfocus="if(this.value == 'KeresÈs...') { this.value = ''; }" value="KeresÈs..." />
+				<input type="text" name= 'search' class='search_box' onfocus="if(this.value == 'Keres√©s...') { this.value = ''; }" value="Keres√©s..." />
 				<div class="search_icon"><input type="submit" name="" value=""></div>
 				</div>
 			</div>
@@ -27,8 +27,38 @@
 			</div>
 			
 			<div class="body_border">
-				<div class="sms">elsı</div>
-				<div class="sms">m·sodik</div>
+			
+			<?php
+			$servername = "localhost";
+			$username = "ncep2y";
+			$password = "D_9db9f2";
+			$dbname = "ncep2y";
+
+			// Create connection
+			$connection = new mysqli($servername, $username, $password, $dbname);
+			// Check connection
+			if ($connection->connect_error) {
+				die("Connection failed: " . $connection->connect_error);
+			} 
+			// SQL query to select sms text from Message table
+			$sql = "SELECT sms_text_hu FROM Message WHERE approved = 1";
+			$result = $connection->query($sql);
+
+			if ($result->num_rows > 0) {
+			// output data of each row
+				$i=1;
+				while($row = $result->fetch_assoc()){
+				echo "<div class='sms'>$row[sms_text_hu]</div>";
+				
+				$i++;
+				}
+			} else {
+				echo "Nincs tal√°lat!";
+			}
+			$connection->close();
+			?>
+				<div class="sms">els≈ë</div>
+				<div class="sms">m√°sodik</div>
 				<div class="sms">harmadik</div>
 				<div class="sms">negyedik</div>
 			</div>
