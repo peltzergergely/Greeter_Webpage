@@ -77,23 +77,29 @@ tr:nth-child(even) {
 }
 
 .search_box {
-	font-size: 35px;
+	font-size: 25px;
 	float: left;
 	border: none;
 	border-bottom: solid 3px;
 	margin-left: 5px;
-	margin-top: 5px;
+	margin-top: 10px;
 	width: 85%;
 	outline: none;
 }
 
 .search_icon {
-	content:url(res/search_icon.png);
+	/*content:url(res/search_icon.png);*/
+	background:url(res/search_icon.png);
+	background-size:cover;
+	border: none;
+	display:inline-block;
 	float: right;
 	margin-right: 10px;
 	margin-top: 5px;
 	border-radius:100%;
-	height:80%;
+	height:50px;
+	width:50px;
+	outline: none;	
 	box-shadow: 1px 1px 10px black;		
 }
  
@@ -110,7 +116,7 @@ tr:nth-child(even) {
 	right: 0;
 	margin-left: auto;
 	margin-right: auto;
-	width: 450px;
+	width: 565px;
 	margin-top: 200px ;
 	margin-bottom: 0px;
 	float: center;
@@ -126,6 +132,7 @@ tr:nth-child(even) {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+	outline: none;
 	box-shadow: 1px 1px 10px black;
 }
 .filter_box:hover {

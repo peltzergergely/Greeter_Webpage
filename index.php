@@ -14,16 +14,19 @@
 			<h2>Ünnepi köszöntések - ha éppen semmi frappáns nem jut az eszedbe!</h2>
 			<div class="lang">
 			</div>
+						<!-- search bar and filter buttons -->
+			<form method=post>
 			<div class="search_bar">
-			<!-- search bar and filter buttons -->
-				<input type="text" name= 'search' class='search_box' onfocus="if(this.value == 'Keresés...') { this.value = ''; }" value="Keresés..." />
-				<div class="search_icon"><input type="submit" name="" value=""></div>
+				<input type="text" name= 'search' class='search_box' onfocus="if(this.value == 'Keresés az sms-ek között') { this.value = ''; }" value="Keresés az sms-ek között" />
+				<input type="submit" name="" value="" class="search_icon">
 				</div>
 			</div>	
 			<div class="filter_boxes">
-				<input type='submit' value='Születésnap' class="filter_box" name='Birthday'>
-				<input type='submit' value='Karácsony' class="filter_box" name='Christmas'>
-				<input type='submit' value='Újjév' class="filter_box" name='New_Year'>
+				<input type='submit' value='Születésnap' class="filter_box" name='Birthday'/>
+				<input type='submit' value='Karácsony' class="filter_box" name='Christmas'/>
+				<input type='submit' value='Újjév' class="filter_box" name='New_Year'/>
+				<input type='submit' value='Összes' class="filter_box" name='All'/>
+			</form>
 			</div>
 		
 			<?php
@@ -44,19 +47,6 @@
 				$filter = 'New_Year';
 				}
 			}
-			?>
-
-			
-			
-			<div class="body_border">
-			<table>
-				<tr>
-					<th>ID</th>
-					<th>SMS</th>
-					<th>Típus</th>
-				</tr>
-				
-			<?php
 			//G: we should make a separate connection.php
 			$servername = "localhost";
 			$username = "id893021_greeter";
@@ -68,27 +58,63 @@
 			// Check connection
 			if ($connection->connect_error) {
 				die("Connection failed: " . $connection->connect_error);
-			} 
+			}
 
+			//IDE KELLENEK A SZURESI FELTETELEK KULONBEN LISTAZZON MINDENT
+			if ($filter!=''){
+				// SQL query to select sms text from Message table
+				$sql = "SELECT * FROM Message WHERE approved = 1 AND sms_label='$filter'";
+				$result = $connection->query($sql);
+				$numOfRows = $result->num_rows;
+				if ($numOfRows > 0) {
+				// output data of each row
+					$i=1;
+					echo "<div class='body_border'>
+							<table>
+								<tr>
+									<th>ID</th>
+									<th>$numOfRows SMS közül választhatsz</th>
+									<th>Típus</th>
+								</tr>";
+					while($row = $result->fetch_assoc()){
+					echo "<tr class='sms'>	
+							<td>$row[sms_id]</td>
+							<td>$row[sms_text]</td>
+							<td>$row[sms_label]</td>";
+					$i++;
+					}					
+				} else {
+					echo "Nincs találat!";
+				}
+			}else{
 				// SQL query to select sms text from Message table
 				$sql = "SELECT * FROM Message WHERE approved = 1";
 				$result = $connection->query($sql);
-
-				if ($result->num_rows > 0) {
+				$numOfRows = $result->num_rows;
+				if ($numOfRows > 0) {
 				// output data of each row
 					$i=1;
+					echo "<div class='body_border'>
+							<table>
+								<tr>
+									<th>ID</th>
+									<th>$numOfRows SMS közül választhatsz</th>
+									<th>Típus</th>
+								</tr>";
 					while($row = $result->fetch_assoc()){
 					echo "<tr class='sms'>	
 							<td>$row[sms_id]</td>
 							<td>$row[sms_text]</td>
 							<td>$row[sms_label]</td>
+							
 						";
 					
 					$i++;
-					}
+					}					
 				} else {
 					echo "Nincs találat!";
 				}
+			}
 			
 			$connection->close();
 			?>
