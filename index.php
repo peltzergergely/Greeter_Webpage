@@ -1,7 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>Greeter</title>
+		<!-- including the css and the google font -->
 		<link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -14,25 +15,53 @@
 			<div class="lang">
 			</div>
 			<div class="search_bar">
+			<!-- search bar and filter buttons -->
 				<input type="text" name= 'search' class='search_box' onfocus="if(this.value == 'Keresés...') { this.value = ''; }" value="Keresés..." />
 				<div class="search_icon"><input type="submit" name="" value=""></div>
 				</div>
-			</div>
+			</div>	
 			<div class="filter_boxes">
-				<div class="filter_box">nulla</div>
-				<div class="filter_box">egy</div>
-				<div class="filter_box">ketto</div>
-				<div class="filter_box">harom</div>
-				<div class="filter_box">negy</div>
+				<input type='submit' value='Születésnap' class="filter_box" name='Birthday'>
+				<input type='submit' value='Karácsony' class="filter_box" name='Christmas'>
+				<input type='submit' value='Újjév' class="filter_box" name='New_Year'>
 			</div>
+		
+			<?php
+			//G:itt próbáltam változónak átadni az értéket ami alapján majd szűrünk, és elképzeltem hogy frissül a tábla
+			//de ez sajnos nehezebb feladatnak bizonyult mint vártam
+			$filter='';
+			if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+				//something posted
+				if (isset($_POST['Birthday'])) {
+				// bday
+				$filter = 'Birthday';
+				} elseif(isset($_POST['Christmas'])) {
+				// xmas
+				$filter = 'Christmas';
+				}
+				 elseif(isset($_POST['New_Year'])) {
+				// ny
+				$filter = 'New_Year';
+				}
+			}
+			?>
+
+			
 			
 			<div class="body_border">
-			
+			<table>
+				<tr>
+					<th>ID</th>
+					<th>SMS</th>
+					<th>Típus</th>
+				</tr>
+				
 			<?php
+			//G: we should make a separate connection.php
 			$servername = "localhost";
-			$username = "ncep2y";
-			$password = "D_9db9f2";
-			$dbname = "ncep2y";
+			$username = "id893021_greeter";
+			$password = "Greeter_sms_01";
+			$dbname = "id893021_greeter_db";
 
 			// Create connection
 			$connection = new mysqli($servername, $username, $password, $dbname);
@@ -40,31 +69,34 @@
 			if ($connection->connect_error) {
 				die("Connection failed: " . $connection->connect_error);
 			} 
-			// SQL query to select sms text from Message table
-			$sql = "SELECT sms_text_hu FROM Message WHERE approved = 1";
-			$result = $connection->query($sql);
 
-			if ($result->num_rows > 0) {
-			// output data of each row
-				$i=1;
-				while($row = $result->fetch_assoc()){
-				echo "<div class='sms'>$row[sms_text_hu]</div>";
-				
-				$i++;
+				// SQL query to select sms text from Message table
+				$sql = "SELECT * FROM Message WHERE approved = 1";
+				$result = $connection->query($sql);
+
+				if ($result->num_rows > 0) {
+				// output data of each row
+					$i=1;
+					while($row = $result->fetch_assoc()){
+					echo "<tr class='sms'>	
+							<td>$row[sms_id]</td>
+							<td>$row[sms_text]</td>
+							<td>$row[sms_label]</td>
+						";
+					
+					$i++;
+					}
+				} else {
+					echo "Nincs találat!";
 				}
-			} else {
-				echo "Nincs találat!";
-			}
+			
 			$connection->close();
 			?>
-				<div class="sms">első</div>
-				<div class="sms">második</div>
-				<div class="sms">harmadik</div>
-				<div class="sms">negyedik</div>
 			</div>
 			<div class="submit_sms">
 			</div>
 		</div>
 	</body>
+
 </html>
 	

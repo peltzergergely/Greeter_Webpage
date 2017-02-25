@@ -5,17 +5,19 @@ body {
 	background-color: Gainsboro;
 }
 
+/* the header */ 
 .header {
-  background-image: url("http://tarhely.adatb.mik.uni-pannon.hu/~aqklk8/prolab/res/winter_theme.jpg");
+  background-image: url(res/winter_theme.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   position: fixed;
   width: 99%;
   height: 500px;
   box-shadow: 1px 1px 10px black;
-  overflow: hidden;
+  overflow:auto;
 }
 
+/* big white block in the middle */ 
 .body_border {
 	position: fixed;
 	background-color: white;
@@ -28,33 +30,23 @@ body {
 	width: 700px;
 	height: 700px;
 	box-shadow: 1px 1px 10px black;
+	overflow:auto;
 }
-
-.sms {
-	width: 95%;
-	height: 35px;
-	background-color: white;
-	margin:auto;
+/* table where the sms-s are listed */
+th, td {
+	border-bottom: 1px solid #ddd;
+	padding: 5px;
 	text-align: center;
-	border-bottom: solid 1px gray;
-	margin-top: 5px;
+
+}
+/* every other row is different color */
+tr:nth-child(even) {
+	background-color: #f2f2f2;
 }
 
-.sms_hover {
-	width: 95%;
-	height: 35px;
-	background-color: white;
-	float: center;
-	margin:auto;
-	text-align: center;
-	border-bottom: solid 1px gray;
-	background-color: Gainsboro;
-	box-shadow: 1px 1px 10px black;
-	margin-top: 5px;
-}
-
+/* language flag */
 .lang {
-	content:url(http://tarhely.adatb.mik.uni-pannon.hu/~aqklk8/prolab/res/uk_flag.png);
+	content:url(res/uk_flag.png);
 	position: fixed;
 	top:0;
 	right:0;
@@ -66,16 +58,7 @@ body {
 	box-shadow: 1px 1px 10px black;		
 }
 
-.lang_hover {
-	content:url(http://tarhely.adatb.mik.uni-pannon.hu/~aqklk8/prolab/res/uk_flag.png);
-	position: fixed;
-	top:0;
-	right:0;
-	float: right;
-	margin-right: 20px;
-	margin-top: 30px;
-	border-radius:100%;
-	height:50px;
+.lang:hover {
 	box-shadow: 1px 1px 25px black;		
 }
 
@@ -105,7 +88,7 @@ body {
 }
 
 .search_icon {
-	content:url(http://tarhely.adatb.mik.uni-pannon.hu/~aqklk8/prolab/res/search_icon.png);
+	content:url(res/search_icon.png);
 	float: right;
 	margin-right: 10px;
 	margin-top: 5px;
@@ -114,52 +97,44 @@ body {
 	box-shadow: 1px 1px 10px black;		
 }
  
-.search_icon_hover {
-	content:url(http://tarhely.adatb.mik.uni-pannon.hu/~aqklk8/prolab/res/search_icon.png);
-	float: right;
-	margin-right: 10px;
-	margin-top: 5px;
-	border-radius:100%;
-	height:80%;
+.search_icon:hover {
 	box-shadow: 1px 1px 25px black;
 }
-	
+/* a big block so the small filter boxes are in the middle
+	if you know a better way please fix this. Now if you add a new
+	filter box, you have to resize this so they stay on the middle 
+	and wont get burried under .body_border */
 .filter_boxes {
 	position: fixed;
 	left: 0;
 	right: 0;
 	margin-left: auto;
 	margin-right: auto;
-	width: 550px;
+	width: 450px;
 	margin-top: 200px ;
 	margin-bottom: 0px;
 	float: center;
 }
-
+/* small filter boxes */
 .filter_box{
-	width: 100px;
-	height: 35px;
-	background-color: white;
-	float: left;
-	margin-right: 5px;
-	margin-left: 5px;
-	text-align: center;
+    background-color: white; /* Green */
+    border: none;
+    color: black;
+    padding: 15px 30px;
+	margin-right:15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 	box-shadow: 1px 1px 10px black;
 }
-
-.filter_box_hover{
-	width: 100px;
-	height: 35px;
-	background-color: white;
-	float: left;
-	margin-right: 5px;
-	margin-left: 5px;
-	text-align: center;
+.filter_box:hover {
 	box-shadow: 1px 1px 30px black;
 }
 
+/* submit button */
 .submit_sms {
-	content:url(http://tarhely.adatb.mik.uni-pannon.hu/~aqklk8/prolab/res/submit_button.png);
+	content:url(res/submit_button.png);
 	position: fixed;
 	bottom: 0;
 	right: 0;
@@ -172,21 +147,11 @@ body {
 	background-color: #0072bc;
 }
 
-.submit_sms_hover {
-	content:url(http://tarhely.adatb.mik.uni-pannon.hu/~aqklk8/prolab/res/submit_button.png);
-	position: fixed;
-	bottom: 0;
-	right: 0;
-	float: right;
-	margin-bottom: 50px;
-	margin-right: 30px;
-	border-radius:100%;
-	height:65px;
+.submit_sms:hover {
 	box-shadow: 1px 1px 25px black;
-	background-color: #0072bc;
 }
 
-
+/* AKA the GREETER sign */
 h1 {
 	text-align: left;
 	float: left;
@@ -196,6 +161,7 @@ h1 {
 	color: #166087;
 }
 
+/* AKA the tite explanation */ 
 h2 {
 	text-align: center;
 	float: center;
