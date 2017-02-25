@@ -17,8 +17,8 @@
 						<!-- search bar and filter buttons -->
 			<form method=post>
 			<div class="search_bar">
-				<input type="text" name= 'search' class='search_box' onfocus="if(this.value == 'Keresés az sms-ek között') { this.value = ''; }" value="Keresés az sms-ek között" />
-				<input type="submit" name="" value="" class="search_icon">
+				<input type="text" name= "search" class='search_box' onfocus="if(this.value == 'Keresés az sms-ek között') { this.value = ''; }" value="Keresés az sms-ek között" />
+				<input type="submit" class="search_icon" alt="keresés"/>
 				</div>
 			</div>	
 			<div class="filter_boxes">
@@ -30,8 +30,6 @@
 			</div>
 		
 			<?php
-			//G:itt próbáltam változónak átadni az értéket ami alapján majd szűrünk, és elképzeltem hogy frissül a tábla
-			//de ez sajnos nehezebb feladatnak bizonyult mint vártam
 			$filter='';
 			if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				//something posted
@@ -47,6 +45,10 @@
 				$filter = 'New_Year';
 				}
 			}
+			$search='';
+			if ($_POST["search"]!="Keresés az sms-ek között") {
+				$search=$_POST["search"];
+			}
 			//G: we should make a separate connection.php
 			$servername = "localhost";
 			$username = "id893021_greeter";
@@ -60,9 +62,53 @@
 				die("Connection failed: " . $connection->connect_error);
 			}
 
-			//IDE KELLENEK A SZURESI FELTETELEK KULONBEN LISTAZZON MINDENT
-			if ($filter!=''){
-				// SQL query to select sms text from Message table
+			//ha van kereses de nincs filter, majd a ketto egyutt
+			if ($search!='' and $search!="Keresés az sms-ek között") {
+				if ($filter=='') {
+				// SQL query to select sms text from Message table with filters
+					$sql = "SELECT * FROM Message WHERE approved = 1 AND sms_text LIKE '%$search%'";
+					$result = $connection->query($sql);
+					$numOfRows = $result->num_rows;
+					if ($numOfRows > 0) {
+					// output data of each row
+						$i=1;
+						echo "<div class='body_border'>
+								<table>
+									<tr>
+										<th>ID</th>
+										<th>$numOfRows SMS közül választhatsz</th>
+										<th>Típus</th>
+									</tr>";
+						while($row = $result->fetch_assoc()){
+						echo "<tr class='sms'>	
+								<td>$row[sms_id]</td>
+								<td>$row[sms_text]</td>
+								<td>$row[sms_label]</td>
+							</tr>";
+						$i++;
+						}
+						echo "</table></div>";
+					} else {
+						echo "<div class='body_border'>
+								<table class>
+									<tr>
+										<th>ID</th>
+										<th>$numOfRows SMS közül választhatsz</th>
+										<th>Típus</th>
+									</tr>
+									<tr class>
+										<td></td><td>Sajnos ezeknek a feltételeknek nem felel meg semmi...
+										<br>jobb alul van a beküldés gomb *kacsint*
+										<td></td>
+									</td>
+						</div>";
+					}
+					// ide kéne hogyha van keresés és van filter is, de ahhoz a filtereket checkboxra kéne állítani... meg amúgyis arra kéne
+				}else{
+					
+				}				
+			}elseif ($filter!=''){
+				// SQL query to select sms text from Message table with filters
 				$sql = "SELECT * FROM Message WHERE approved = 1 AND sms_label='$filter'";
 				$result = $connection->query($sql);
 				$numOfRows = $result->num_rows;
@@ -77,7 +123,7 @@
 									<th>Típus</th>
 								</tr>";
 					while($row = $result->fetch_assoc()){
-					echo "<tr class='sms'>	
+					echo "<tr>	
 							<td>$row[sms_id]</td>
 							<td>$row[sms_text]</td>
 							<td>$row[sms_label]</td>";
@@ -87,7 +133,7 @@
 					echo "Nincs találat!";
 				}
 			}else{
-				// SQL query to select sms text from Message table
+				// SQL query to select ALL sms text from Message table
 				$sql = "SELECT * FROM Message WHERE approved = 1";
 				$result = $connection->query($sql);
 				$numOfRows = $result->num_rows;
@@ -102,7 +148,7 @@
 									<th>Típus</th>
 								</tr>";
 					while($row = $result->fetch_assoc()){
-					echo "<tr class='sms'>	
+					echo "<tr>	
 							<td>$row[sms_id]</td>
 							<td>$row[sms_text]</td>
 							<td>$row[sms_label]</td>

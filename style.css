@@ -1,5 +1,6 @@
 * {
 	font-family: 'Roboto', sans-serif;
+	overflow: visible;
 	}
 body {
 	background-color: Gainsboro;
@@ -28,7 +29,7 @@ body {
 	margin-top: 250px ;
 	margin-bottom: 0px;
 	width: 700px;
-	height: 700px;
+	height: 600px;
 	box-shadow: 1px 1px 10px black;
 	overflow:auto;
 }
@@ -162,9 +163,7 @@ tr:nth-child(even) {
 h1 {
 	text-align: left;
 	float: left;
-	overflow: hidden;
 	position: relative;
-	overflow: hidden;
 	color: #166087;
 }
 
