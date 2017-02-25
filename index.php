@@ -3,7 +3,7 @@
 	<head>
 		<title>Greeter</title>
 		<!-- including the css and the google font -->
-		<link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" src="script.js"></script>
@@ -20,23 +20,49 @@
 				<input type="text" name= "search" class='search_box' onfocus="if(this.value == 'Keresés az sms-ek között') { this.value = ''; }" value="Keresés az sms-ek között" />
 				<input type="submit" class="search_icon" alt="keresés"/>
 				</div>
-			</div>	
-			<div class="filter_boxes">
-				<input type='submit' value='Születésnap' class="filter_box" name='Birthday'/>
+			</div>
+			<div class="filter_boxes">			
+				<div id="ck-button">
+					<label>
+						<input type="checkbox" value="Születésnap" name='Birthday' hidden><span>Születésnap</span>
+					</label>					
+				</div>
+				<div id="ck-button">
+					<label>
+						<input type="checkbox" value="Névnap" name='Nameday' hidden><span>Névnap</span>
+					</label>					
+				</div>
+				<div id="ck-button">
+					<label>
+						<input type="checkbox" value="Karácsony" name='Christmas' hidden><span>Karácsony</span>
+					</label>					
+				</div>
+				<div id="ck-button">
+					<label>
+						<input type="checkbox" value="Újjév" name='New_Year' hidden><span>Újjév</span>
+					</label>					
+				</div>
+				<div id="ck-button">
+					<label>
+						<input type="checkbox" value="Összes" name='All' hidden><span>Összes</span>
+					</label>					
+				</div>
+<!--	checkboxokkal??			<input type='submit' value='Születésnap' class="filter_box" name='Birthday'/>
 				<input type='submit' value='Karácsony' class="filter_box" name='Christmas'/>
 				<input type='submit' value='Újjév' class="filter_box" name='New_Year'/>
 				<input type='submit' value='Összes' class="filter_box" name='All'/>
+				-->
 			</form>
 			</div>
 			<?php
 				/* checking buttonpress here and giving value to $filter */ 
-			$filter='';
+/*	checkboxosdi...		$filter='';
 			if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				//something posted
 				if (isset($_POST['Birthday'])) { $filter = 'Birthday';
 				} elseif(isset($_POST['Christmas'])) { $filter = 'Christmas';
 				} elseif(isset($_POST['New_Year'])) { $filter = 'New_Year'; }
-			}
+			}*/
 				/* making the search variable here and checking if it's set */
 			$search='';
 			if ($_POST["search"]!="Keresés az sms-ek között") { $search=$_POST["search"]; }
@@ -52,9 +78,9 @@
 					print_result($connection, $sql);
 				}
 				/* query for the labeling - currently only one at a time*/
-			}elseif ($filter!=''){
+/*			}elseif ($filter!=''){
 				$sql = "SELECT * FROM Message WHERE approved = 1 AND sms_label='$filter'";
-				print_result($connection, $sql);
+				print_result($connection, $sql);*/
 			}else{
 				/* query to list ALL the SMS */
 				$sql = "SELECT * FROM Message WHERE approved = 1";

@@ -1,5 +1,6 @@
 * {
 	font-family: 'Roboto', sans-serif;
+	src: url(https://fonts.googleapis.com/css?family=Roboto:500);
 	overflow: visible;
 	}
 body {
@@ -16,6 +17,7 @@ body {
   height: 500px;
   box-shadow: 1px 1px 10px black;
   overflow:auto;
+  z-index: -1;
 }
 
 /* big white block in the middle */ 
@@ -28,10 +30,11 @@ body {
 	margin-right: auto;
 	margin-top: 250px ;
 	margin-bottom: 0px;
-	width: 700px;
+	width: 900px;
 	height: 600px;
 	box-shadow: 1px 1px 10px black;
 	overflow:auto;
+	border-radius: 3px;
 }
 /* table where the sms-s are listed */
 th, td {
@@ -69,12 +72,13 @@ tr:nth-child(even) {
 	right: 0;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 125px ;
+	margin-top: 100px ;
 	width: 540px;
 	background-color: white;
 	height: 60px;
 	box-shadow: 1px 1px 10px black;
 	text-align: center;
+	border-radius: 3px;
 }
 
 .search_box {
@@ -121,8 +125,8 @@ tr:nth-child(even) {
 	right: 0;
 	margin-left: auto;
 	margin-right: auto;
-	width: 565px;
-	margin-top: 200px ;
+	width: 700px;
+	margin-top: 170px ;
 	margin-bottom: 0px;
 	float: center;
 }
@@ -140,8 +144,38 @@ tr:nth-child(even) {
 	outline: none;
 	box-shadow: 1px 1px 10px black;
 }
-.filter_box:hover {
-	box-shadow: 1px 1px 30px black;
+
+/* super button like checkbox */
+
+#ck-button {
+    margin:4px;
+    background-color:white;
+    border-radius:3px;
+    border: none;
+    overflow:auto;
+    float:left;
+	box-shadow: 1px 1px 10px black;
+}
+
+#ck-button:hover {
+	box-shadow: 1px 1px 25px black;
+}
+
+#ck-button label {
+    float:left;
+    width: 130px;
+	height: 31px;
+}
+
+#ck-button label span {
+    text-align:center;
+    padding:6px 0px;
+    display:block;
+}
+
+#ck-button input:checked + span {
+    background-color:#166087;
+    color:#fff;
 }
 
 /* submit button */
