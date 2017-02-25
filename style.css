@@ -101,7 +101,11 @@ tr:nth-child(even) {
 	height:50px;
 	width:50px;
 	outline: none;	
-	box-shadow: 1px 1px 10px black;		
+	box-shadow: 1px 1px 10px black;
+	    /* Hide the text. cheating*/
+    text-indent: 120%;
+    white-space: nowrap;
+    overflow: hidden;	
 }
  
 .search_icon:hover {
