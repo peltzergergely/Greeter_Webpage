@@ -47,17 +47,20 @@
 				<input type="text" name= "search" class='search_box' onfocus="if(this.value == 'Keresés az sms-ek között') { this.value = ''; }" value="Keresés az sms-ek között" />
 				<input type="submit" class="search_icon" alt="keresés"/>
 			</div>
-			</div>
+		</div>
 			<div class="container">
 				<div class="submit_sms"><span>Expand</span>
 				</div>
 				<div class="content">
 					Itt tudsz beküldeni nekünk új SMS-eket!<br>
 					<input type="text" class="input_sms" name="sms_in"/>
-					<input type="submit" class="" alt="beküld"/>
-				</div>
+					<button class="add-item">Beküldés</button>
+				</div>			
 			</div>
 			</form>
+			
+			<div id="status-area"></div>
+
 
 			<!-- submit form -->
 
@@ -67,15 +70,13 @@
 				/* making the search variable here and checking if it's set */
 			$search='';
 			if ($_POST["search"]!="Keresés az sms-ek között") { $search=$_POST["search"]; }
-			/* itt lenne az insert query a beküldéshez.. */
-			if (isset($_POST["sms_in"])) {
+			/* QUERY TO SEND IN TEXT */
+			if (isset($_POST["sms_in"]) and strlen($_POST["sms_in"])>5) {
+				 sleep(1);
 				 $sms_in=$_POST["sms_in"];
 				 $sql = "INSERT INTO Message (sms_text, sms_language, sms_label, approved) VALUES ('$sms_in', 'hu', 'unset', '0')";
-				 $result = $connection->query($sql);				 
+				 $result = $connection->query($sql);
 			}
-			
-				/* the connection to the DB is estabilished HERE */
-
 				/* SEARCHING IS HAPPENING FROM HERE seems like done, searches with labels and text*/
 			if ($search!='' and $search!="Keresés az sms-ek között") {
 					$sql = "SELECT * FROM Message WHERE approved = 1 AND sms_text LIKE '%$search%'";

@@ -15,7 +15,9 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   position: absolute;
-  width: 99%;
+  width: 100%;
+  top:0;
+  left:0;
   height: 500px;
   box-shadow: 1px 1px 10px black;
   overflow:auto;
@@ -230,6 +232,17 @@ tr:nth-child(even) {
 
 .input_sms {
 	width: 400px;
+}
+
+#status-area .flash_message {
+	position: absolute;
+	bottom:0;
+	right:0;
+    padding: 5px;
+    color: #0072bc;
+	background-color: white;
+	z-index:100;
+	font-size:25px;
 }
 
 /* AKA the GREETER sign */
