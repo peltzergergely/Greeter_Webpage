@@ -15,75 +15,75 @@
 			<div class="lang">
 			</div>
 						<!-- search bar and filter buttons -->
-			<form method=post>
-			<div class="search_bar">
-				<input type="text" name= "search" class='search_box' onfocus="if(this.value == 'Keresés az sms-ek között') { this.value = ''; }" value="Keresés az sms-ek között" />
-				<input type="submit" class="search_icon" alt="keresés"/>
-				</div>
-			</div>
+			<form action="" method="post">
 			<div class="filter_boxes">			
 				<div id="ck-button">
 					<label>
-						<input type="checkbox" value="Születésnap" name='Birthday' hidden><span>Születésnap</span>
+						<input type="checkbox" value="Birthday" name='chkbox[]' hidden><span>Születésnap</span>
 					</label>					
 				</div>
 				<div id="ck-button">
 					<label>
-						<input type="checkbox" value="Névnap" name='Nameday' hidden><span>Névnap</span>
+						<input type="checkbox" value="Nameday" name='chkbox[]' hidden><span>Névnap</span>
 					</label>					
 				</div>
 				<div id="ck-button">
 					<label>
-						<input type="checkbox" value="Karácsony" name='Christmas' hidden><span>Karácsony</span>
+						<input type="checkbox" value="Christmas" name='chkbox[]' hidden><span>Karácsony</span>
 					</label>					
 				</div>
 				<div id="ck-button">
 					<label>
-						<input type="checkbox" value="Újjév" name='New_Year' hidden><span>Újjév</span>
+						<input type="checkbox" value="New_Year" name='chkbox[]' hidden><span>Újjév</span>
 					</label>					
 				</div>
 				<div id="ck-button">
 					<label>
-						<input type="checkbox" value="Összes" name='All' hidden><span>Összes</span>
+						<input type="checkbox" value="All" name='All' hidden><span>Összes</span>
 					</label>					
 				</div>
-<!--	checkboxokkal??			<input type='submit' value='Születésnap' class="filter_box" name='Birthday'/>
-				<input type='submit' value='Karácsony' class="filter_box" name='Christmas'/>
-				<input type='submit' value='Újjév' class="filter_box" name='New_Year'/>
-				<input type='submit' value='Összes' class="filter_box" name='All'/>
-				-->
+			</div>
+			<div class="search_bar">
+				<input type="text" name= "search" class='search_box' onfocus="if(this.value == 'Keresés az sms-ek között') { this.value = ''; }" value="Keresés az sms-ek között" />
+				<input type="submit" class="search_icon" alt="keresés"/>
+			</div>
 			</form>
 			</div>
 			<?php
-				/* checking buttonpress here and giving value to $filter */ 
-/*	checkboxosdi...		$filter='';
-			if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-				//something posted
-				if (isset($_POST['Birthday'])) { $filter = 'Birthday';
-				} elseif(isset($_POST['Christmas'])) { $filter = 'Christmas';
-				} elseif(isset($_POST['New_Year'])) { $filter = 'New_Year'; }
-			}*/
+	
 				/* making the search variable here and checking if it's set */
 			$search='';
-			if ($_POST["search"]!="Keresés az sms-ek között") { $search=$_POST["search"]; }
+			if ($_POST["search"]!="Keresés az sms-ek között") { $search=$_POST["search"]; }	
 			
 				/* the connection to the DB is estabilished HERE */
 			include "connect.php";
-						
-				/* SEARCHING IS HAPPENING FROM HERE */
+				/* SEARCHING IS HAPPENING FROM HERE seems like done, searches with labels and text*/
 			if ($search!='' and $search!="Keresés az sms-ek között") {
-				if ($filter=='') {
-				/* query for searchbar */
 					$sql = "SELECT * FROM Message WHERE approved = 1 AND sms_text LIKE '%$search%'";
+					if (is_array($_POST['chkbox'])) {
+						$sql .= " AND";
+						foreach($_POST['chkbox'] AS $value) {
+							$sql .= " sms_label='{$value}' OR ";
+						}
+						$sql  = substr($sql, 0, -4);
+						$sql .= " ORDER BY sms_label";
+					//	echo "query if= " . $sql . "<br /><br />";
+					} 				
 					print_result($connection, $sql);
-				}
-				/* query for the labeling - currently only one at a time*/
-/*			}elseif ($filter!=''){
-				$sql = "SELECT * FROM Message WHERE approved = 1 AND sms_label='$filter'";
-				print_result($connection, $sql);*/
 			}else{
-				/* query to list ALL the SMS */
-				$sql = "SELECT * FROM Message WHERE approved = 1";
+				/* query to list filtered or all the SMS */
+				if (is_array($_POST['chkbox'])) {
+					$sql = "SELECT * FROM Message WHERE approved = 1 AND";
+					foreach($_POST['chkbox'] AS $value) {
+						$sql .= " sms_label='{$value}' OR ";
+					}
+					$sql  = substr($sql, 0, -4);
+					$sql .= " ORDER BY sms_label";
+					//echo "query if= " . $sql . "<br /><br />";
+					} else {
+						$sql = "SELECT * FROM Message WHERE approved = 1";
+					//	echo "query else= " . $sql . "<br /><br />";
+					}
 				print_result($connection, $sql);
 			}
 			
@@ -107,6 +107,7 @@
 						if ($row[sms_label]=='Birthday') $filter_name='Szülinap';
 						elseif ($row[sms_label]=='Christmas') $filter_name='Karácsony';
 						elseif ($row[sms_label]=='New_Year') $filter_name='Újjév';
+						elseif ($row[sms_label]=='Nameday') $filter_name='Névnap';
 						$len = strlen($row[sms_text]);
 					echo "<tr>	
 							<td>$row[sms_id]</td>
