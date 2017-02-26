@@ -53,7 +53,8 @@
 				</div>
 				<div class="content">
 					Itt tudsz beküldeni nekünk új SMS-eket!<br>
-					<input type="text" class="input_sms" name="sms_in"/><input type="submit" class="" alt="beküld"/>
+					<input type="text" class="input_sms" name="sms_in"/>
+					<input type="submit" class="" alt="beküld"/>
 				</div>
 			</div>
 			</form>
@@ -61,21 +62,20 @@
 			<!-- submit form -->
 
 			<?php
+			include "connect.php";
 	
 				/* making the search variable here and checking if it's set */
 			$search='';
 			if ($_POST["search"]!="Keresés az sms-ek között") { $search=$_POST["search"]; }
 			/* itt lenne az insert query a beküldéshez.. */
-			if (isset($_GET["input_sms"])) {
-				 $input_sms=$_GET["input_sms"];
-				 $sql = "INSERT INTO Message (sms_text, sms_language, sms_label, approved) VALUES ('$input_sms', 'hu', 'unset', '0')";
-				 echo "beirt szöveg: $input_sms
-						<br> sql parancs: $sql";
-				 $result = $connection->query($sql);
-			};
+			if (isset($_POST["sms_in"])) {
+				 $sms_in=$_POST["sms_in"];
+				 $sql = "INSERT INTO Message (sms_text, sms_language, sms_label, approved) VALUES ('$sms_in', 'hu', 'unset', '0')";
+				 $result = $connection->query($sql);				 
+			}
 			
 				/* the connection to the DB is estabilished HERE */
-			include "connect.php";
+
 				/* SEARCHING IS HAPPENING FROM HERE seems like done, searches with labels and text*/
 			if ($search!='' and $search!="Keresés az sms-ek között") {
 					$sql = "SELECT * FROM Message WHERE approved = 1 AND sms_text LIKE '%$search%'";
