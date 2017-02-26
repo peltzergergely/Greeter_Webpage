@@ -9,15 +9,15 @@
 		<script type="text/javascript" src="script.js"></script>
 	</head>
 	<body>
-<div class="wrapper">
-    <div id="slide">
-	Itt tudsz sms-t beküldeni. csak töltsd ki a mezőt és moderátoraink hamarosan jóváhagyják!
-	<form>
-	  <input type="text"/>
-	 </form>
-	</div>
-</div>
+		<div class="container">
+			<div class="submit_sms"><span>Expand</span>
+			</div>
+			<div class="content">
+				Itt tudsz beküldeni nekünk új SMS-eket!<br>
+				<input type="text" class="input_sms"/><input type="submit" class="" alt="beküld"/>
 
+			</div>
+		</div>
 	</body>
 
 </html>

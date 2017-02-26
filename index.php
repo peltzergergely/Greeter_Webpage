@@ -9,7 +9,7 @@
 		<script type="text/javascript" src="script.js"></script>
 	</head>
 	<body>
-		<div class="header">
+		<div class="headerB">
 			<h1>GREETER</h1>
 			<h2>Ünnepi köszöntések - ha éppen semmi frappáns nem jut az eszedbe!</h2>
 			<div class="lang">
@@ -47,23 +47,32 @@
 				<input type="text" name= "search" class='search_box' onfocus="if(this.value == 'Keresés az sms-ek között') { this.value = ''; }" value="Keresés az sms-ek között" />
 				<input type="submit" class="search_icon" alt="keresés"/>
 			</div>
-			</form>
 			</div>
-			
-			<!-- submit form -->
-			<div class="wrapper">
-				<div id="slide">
-				Itt tudsz sms-t beküldeni. csak töltsd ki a mezőt és moderátoraink hamarosan jóváhagyják!
-				<form>
-				  <input id="submitfield" type="text"/>
-				 </form>
+			<div class="container">
+				<div class="submit_sms"><span>Expand</span>
+				</div>
+				<div class="content">
+					Itt tudsz beküldeni nekünk új SMS-eket!<br>
+					<input type="text" class="input_sms" name="sms_in"/><input type="submit" class="" alt="beküld"/>
 				</div>
 			</div>
+			</form>
+
+			<!-- submit form -->
+
 			<?php
 	
 				/* making the search variable here and checking if it's set */
 			$search='';
-			if ($_POST["search"]!="Keresés az sms-ek között") { $search=$_POST["search"]; }	
+			if ($_POST["search"]!="Keresés az sms-ek között") { $search=$_POST["search"]; }
+			/* itt lenne az insert query a beküldéshez.. */
+			if (isset($_GET["input_sms"])) {
+				 $input_sms=$_GET["input_sms"];
+				 $sql = "INSERT INTO Message (sms_text, sms_language, sms_label, approved) VALUES ('$input_sms', 'hu', 'unset', '0')";
+				 echo "beirt szöveg: $input_sms
+						<br> sql parancs: $sql";
+				 $result = $connection->query($sql);
+			};
 			
 				/* the connection to the DB is estabilished HERE */
 			include "connect.php";
@@ -116,7 +125,7 @@
 					while($row = $result->fetch_assoc()){
 						if ($row[sms_label]=='Birthday') $filter_name='Szülinap';
 						elseif ($row[sms_label]=='Christmas') $filter_name='Karácsony';
-						elseif ($row[sms_label]=='New_Year') $filter_name='Újjév';
+						elseif ($row[sms_label]=='New_Year') $filter_name='Újév';
 						elseif ($row[sms_label]=='Nameday') $filter_name='Névnap';
 						$len = strlen($row[sms_text]);
 					echo "<tr>	
@@ -146,10 +155,9 @@
 			
 			$connection->close();
 			?>
-			</div>
-			<div class="submit_sms">
-			</div>
 		</div>
+		</div>
+
 	</body>
 
 </html>
