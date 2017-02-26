@@ -49,6 +49,16 @@
 			</div>
 			</form>
 			</div>
+			
+			<!-- submit form -->
+			<div class="wrapper">
+				<div id="slide">
+				Itt tudsz sms-t beküldeni. csak töltsd ki a mezőt és moderátoraink hamarosan jóváhagyják!
+				<form>
+				  <input id="submitfield" type="text"/>
+				 </form>
+				</div>
+			</div>
 			<?php
 	
 				/* making the search variable here and checking if it's set */

@@ -197,6 +197,42 @@ tr:nth-child(even) {
 	box-shadow: 1px 1px 25px black;
 }
 
+/* submitform */
+
+.wrapper {
+    position: fixed;
+	bottom: 0;
+	right: 0;
+	margin-bottom: 40px;
+    overflow: hidden;
+    width: 200px;
+    height: 300px; 
+    border: 1px solid black;
+	z-index:100;
+}
+
+#slide {
+    position: absolute;
+    right: -200px;
+    width: 200px;
+    height: 300px;
+    transition: 1s;
+	background-color: white;
+	z-index:100;
+}
+
+#submitfield {
+	height: 150px;
+	width: 180px;
+	margin: 10px;
+}
+
+.wrapper:hover #slide {
+    transition: 1s;
+    right: 0;
+}
+
+
 /* AKA the GREETER sign */
 h1 {
 	text-align: left;
