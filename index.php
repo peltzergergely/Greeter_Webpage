@@ -54,6 +54,12 @@
 				<div class="content">
 					Itt tudsz beküldeni nekünk új SMS-eket!<br>
 					<input type="text" class="input_sms" name="sms_in"/>
+					<select name='sms_label'>
+						<option value='Christmas'>Karácsony</option>
+						<option value='New_Year'>Újév</option>
+						<option value='Nameday'>Névnap</option>
+						<option value='Birthday'>Szülinap</option>
+					</select>
 					<button class="add-item">Beküldés</button>
 				</div>			
 			</div>
@@ -69,13 +75,15 @@
 	
 				/* making the search variable here and checking if it's set */
 			$search='';
-			if ($_POST["search"]!="Keresés az sms-ek között") { $search=$_POST["search"]; }
+			if (isset($_POST['search']) and $_POST['search']!="Keresés az sms-ek között") { $search=$_POST['search']; }
 			/* QUERY TO SEND IN TEXT */
-			if (isset($_POST["sms_in"]) and strlen($_POST["sms_in"])>5) {
+			if (isset($_POST['sms_in']) and strlen($_POST['sms_in'])>5) {
 				 sleep(1);
-				 $sms_in=$_POST["sms_in"];
-				 $sql = "INSERT INTO Message (sms_text, sms_language, sms_label, approved) VALUES ('$sms_in', 'hu', 'unset', '0')";
-				 $result = $connection->query($sql);
+				 $sms_in=$_POST['sms_in'];
+				 $sms_label=$_POST['sms_label'];
+				 $sql = "INSERT INTO Message (sms_text, sms_language, sms_label, approved) VALUES ('$sms_in', '$sms_label', 'hu', '0')";
+				 //echo "$sql";
+				 $result = mysqli_query($connection, $sql) or die("Something is fishy");
 			}
 				/* SEARCHING IS HAPPENING FROM HERE seems like done, searches with labels and text*/
 			if ($search!='' and $search!="Keresés az sms-ek között") {
@@ -92,7 +100,7 @@
 					print_result($connection, $sql);
 			}else{
 				/* query to list filtered or all the SMS */
-				if (is_array($_POST['chkbox'])) {
+				if (isset($_POST['chkbox']) AND is_array($_POST['chkbox'])) {
 					$sql = "SELECT * FROM Message WHERE approved = 1 AND";
 					foreach($_POST['chkbox'] AS $value) {
 						$sql .= " sms_label='{$value}' OR ";
@@ -110,8 +118,8 @@
 				/* THE PRINT FUNCTION */
 			
 			function print_result ($connection, $sql){
-				$result = $connection->query($sql);
-				$numOfRows = $result->num_rows;
+				$result = mysqli_query($connection, $sql);
+				$numOfRows = mysqli_num_rows($result);
 				if ($numOfRows > 0) {
 				/* output data for each row */
 					$i=1;
@@ -123,12 +131,12 @@
 									<th width=12%>Típus</th>
 									<th>Hossz</th>
 								</tr>";
-					while($row = $result->fetch_assoc()){
-						if ($row[sms_label]=='Birthday') $filter_name='Szülinap';
-						elseif ($row[sms_label]=='Christmas') $filter_name='Karácsony';
-						elseif ($row[sms_label]=='New_Year') $filter_name='Újév';
-						elseif ($row[sms_label]=='Nameday') $filter_name='Névnap';
-						$len = strlen($row[sms_text]);
+					while($row = mysqli_fetch_assoc($result)){
+						if ($row['sms_label']=='Birthday') $filter_name='Szülinap';
+						elseif ($row['sms_label']=='Christmas') $filter_name='Karácsony';
+						elseif ($row['sms_label']=='New_Year') $filter_name='Újév';
+						elseif ($row['sms_label']=='Nameday') $filter_name='Névnap';
+						$len = strlen($row['sms_text']);
 					echo "<tr>	
 							<td>$row[sms_id]</td>
 							<td>$row[sms_text]</td>
@@ -145,7 +153,7 @@
 								<tr>
 									<th width=5%>ID</th>
 									<th width=80%>$numOfRows SMS közül választhatsz</th>
-									<th>Típus</th>
+									<th>T�pus</th>
 								</tr>
 								<tr>
 									<td colspan=3>Sajnos nincs a keresésnek megfelelő üzenet a rendszerünkben <br>

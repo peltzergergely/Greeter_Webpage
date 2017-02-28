@@ -1,13 +1,16 @@
 <?php
-			$servername = "localhost";
-			$username = "id893021_greeter";
-			$password = "Greeter_sms_01";
-			$dbname = "id893021_greeter_db";
 
-			// Create connection
-			$connection = new mysqli($servername, $username, $password, $dbname);
-			// Check connection
-			if ($connection->connect_error) {
-				die("Connection failed: " . $connection->connect_error);
-			}
+    // az adatbazis kapcsolat parameterei
+    $host="localhost";
+    $user="id893021_greeter";
+    $pass="Greeter_sms_01";
+    $db="id893021_greeter";
+
+    // adatbazis kapcsolat letrehozasa
+	$connection=mysqli_connect($host,$user,$pass) or die("Could not connect");
+	
+
+    // adatbazis kivalasztasa
+	mysqli_select_db($connection,$db) or die("Could not select database");
+	
 ?>

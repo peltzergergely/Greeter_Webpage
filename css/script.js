@@ -22,6 +22,32 @@ $(document).ready(function(){
 			//change text of header based on visibility of content div
 			});
 		});
+		
+	$(".edit_button").click(function () {
+
+		$header = $(this);
+		//getting the next element
+		$content = $header.next();
+		//open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+		$content.slideToggle(function () {
+			//execute this after slideToggle is done
+			//change text of header based on visibility of content div
+			});
+		});
+	
+		$(".add_item").click(function () {
+
+		$header = $(this);
+		//getting the next element
+		$content = $header.next();
+		//open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+		$content.slideToggle(function () {
+			//execute this after slideToggle is done
+			//change text of header based on visibility of content div
+			});
+		});
+		
+		
 (function($) {
     $.fn.flash_message = function(options) {
       
