@@ -4,9 +4,9 @@
 		<title>Greeter</title>
 		<!-- including the css and the google font -->
 		<link href="https://fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-		<script type="text/javascript" src="script.js"></script>
+		<script type="text/javascript" src="css/script.js"></script>
 	</head>
 	<body>
 		<div class="headerB">
@@ -34,7 +34,7 @@
 				</div>
 				<div id="ck-button">
 					<label>
-						<input type="checkbox" value="New_Year" name='chkbox[]' hidden><span>Újjév</span>
+						<input type="checkbox" value="New_Year" name='chkbox[]' hidden><span>Újév</span>
 					</label>					
 				</div>
 				<div id="ck-button">
