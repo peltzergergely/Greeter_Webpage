@@ -5,8 +5,9 @@
 	}
 
 body {
-	background-color: Gainsboro;
+	background-color: #f7f7f7;
 	overflow: visible;
+	color: #0a0a0a;
 }
 
 /* the header */ 
@@ -43,15 +44,16 @@ body {
 }
 /* table where the sms-s are listed */
 th, td {
-	border-bottom: 1px solid #ddd;
+	border: none;
 	padding: 5px;
 	text-align: center;
 
 }
 /* every other row is different color */
 tr:nth-child(even) {
-	background-color: #f2f2f2;
+	background-color: #dddddd;
 }
+
 
 /* language flag */
 .lang {
@@ -69,6 +71,18 @@ tr:nth-child(even) {
 
 .lang:hover {
 	box-shadow: 1px 1px 25px black;		
+}
+
+.info {
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 220px ;
+	text-align: center;
+	width: 700px;
+	background-color:rgba(255, 255, 255, 0.5);
 }
 
 .search_bar {
@@ -90,7 +104,7 @@ tr:nth-child(even) {
 	font-size: 25px;
 	float: left;
 	border: none;
-	border-bottom: solid 3px;
+	border-bottom: solid 3px #383838;
 	margin-left: 5px;
 	margin-top: 18px;
 	width: 85%;
@@ -137,9 +151,9 @@ tr:nth-child(even) {
 }
 /* small filter boxes */
 .filter_box{
-    background-color: white; /* Green */
+    background-color: white; 
     border: none;
-    color: black;
+    color: #0a0a0a;
     padding: 15px 30px;
 	margin-right:15px;
     text-align: center;

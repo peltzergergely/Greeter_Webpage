@@ -1,21 +1,28 @@
 <!DOCTYPE html>
+<?php	include "connect.php"; ?>
 <html>
 	<head>
 		<title>Greeter</title>
-		<!-- including the css and the google font -->
+						<!-- including the css and the google font -->
 		<link href="https://fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" src="css/script.js"></script>
 	</head>
 	<body>
+						<!-- ------------------ header ------------------ -->
 		<div class="headerB">
 			<h1>GREETER</h1>
 			<h2>Ünnepi köszöntések - ha éppen semmi frappáns nem jut az eszedbe!</h2>
 			<div class="lang">
 			</div>
-						<!-- search bar and filter buttons -->
+						<!-- ------------------ search bar ------------------ -->
 			<form action="" method="post">
+			<div class="search_bar">
+				<input placeholder="Keresés az sms-ek között" type="text" name= "search" class='search_box' autofocus />
+				<input type="submit" class="search_icon" alt="keresés"/>
+			</div>
+						<!-- ------------------ filter boxes ------------------ -->			
 			<div class="filter_boxes">			
 				<div id="ck-button">
 					<label>
@@ -43,10 +50,9 @@
 					</label>					
 				</div>
 			</div>
-			<div class="search_bar">
-				<input type="text" name= "search" class='search_box' onfocus="if(this.value == 'Keresés az sms-ek között') { this.value = ''; }" value="Keresés az sms-ek között" />
-				<input type="submit" class="search_icon" alt="keresés"/>
-			</div>
+			<div class="info">A találatok szűkítéséhez jelölj ki egy vagy több kategóriát majd kattints a keresés gombra!
+			</div>		
+						<!-- ------------------ sms input START ------------------ -->			
 		</div>
 			<div class="container">
 				<div class="submit_sms"><span>Expand</span>
@@ -65,39 +71,36 @@
 			</div>
 			</form>
 			
-			<div id="status-area"></div>
-
-
-			<!-- submit form -->
-
-			<?php
-			include "connect.php";
-	
-				/* making the search variable here and checking if it's set */
-			$search='';
-			if (isset($_POST['search']) and $_POST['search']!="Keresés az sms-ek között") { $search=$_POST['search']; }
-			/* QUERY TO SEND IN TEXT */
-			if (isset($_POST['sms_in']) and strlen($_POST['sms_in'])>5) {
+			<?php 
+				if (isset($_POST['sms_in']) and strlen($_POST['sms_in'])>5) {
 				 sleep(1);
 				 $sms_in=$_POST['sms_in'];
 				 $sms_label=$_POST['sms_label'];
-				 $sql = "INSERT INTO Message (sms_text, sms_language, sms_label, approved) VALUES ('$sms_in', '$sms_label', 'hu', '0')";
+				 $sql = "INSERT INTO Message (sms_text, sms_language, sms_label, approved) VALUES ('$sms_in', 'hu', '$sms_label', '0')";
 				 //echo "$sql";
 				 $result = mysqli_query($connection, $sql) or die("Something is fishy");
-			}
-				/* SEARCHING IS HAPPENING FROM HERE seems like done, searches with labels and text*/
-			if ($search!='' and $search!="Keresés az sms-ek között") {
+			}?>
+			
+			<div id="status-area"></div>
+						<!-- ------------------ sms input END ------------------ -->
+
+			<?php
+				/* making the search variable here and checking if it's set */
+			$search='';
+			if (isset($_POST['search']) and $_POST['search']!="") { $search=$_POST['search']; } //GIVE SEARCH VARIABLE THE DATA FROM THE FIELD
+			//Check if search is filled
+			if ($search!='' and $search!="Keresés az sms-ek között") { 
 					$sql = "SELECT * FROM Message WHERE approved = 1 AND sms_text LIKE '%$search%'";
-					if (is_array($_POST['chkbox'])) {
+					// check if checkboxes are ticked and make the query lining them together
+					if (isset($_POST['chkbox'])) { 
 						$sql .= " AND";
 						foreach($_POST['chkbox'] AS $value) {
 							$sql .= " sms_label='{$value}' OR ";
 						}
 						$sql  = substr($sql, 0, -4);
 						$sql .= " ORDER BY sms_label";
-					//	echo "query if= " . $sql . "<br /><br />";
+						//echo "query if= " . $sql . "<br /><br />";
 					} 				
-					print_result($connection, $sql);
 			}else{
 				/* query to list filtered or all the SMS */
 				if (isset($_POST['chkbox']) AND is_array($_POST['chkbox'])) {
@@ -110,64 +113,67 @@
 					//echo "query if= " . $sql . "<br /><br />";
 					} else {
 						$sql = "SELECT * FROM Message WHERE approved = 1";
-					//	echo "query else= " . $sql . "<br /><br />";
+						//echo "query else= " . $sql . "<br /><br />";
 					}
-				print_result($connection, $sql);
 			}
+			print_result($connection, $sql);
+			?>
 			
-				/* THE PRINT FUNCTION */
-			
+			<?php
+				/* THE PRINT FUNCTION */			
 			function print_result ($connection, $sql){
 				$result = mysqli_query($connection, $sql);
 				$numOfRows = mysqli_num_rows($result);
 				if ($numOfRows > 0) {
 				/* output data for each row */
-					$i=1;
-					echo "<div class='body_border'>
+					$i=1; ?>
+					<div class='body_border'>
 							<table width=100%>
 								<tr>
 									<th width=5%>ID</th>
-									<th>$numOfRows SMS közül választhatsz</th>
+									<th><?php echo $numOfRows ?> SMS közül választhatsz</th>
 									<th width=12%>Típus</th>
 									<th>Hossz</th>
-								</tr>";
-					while($row = mysqli_fetch_assoc($result)){
+								</tr>								
+					<?php 
+						while($row = mysqli_fetch_assoc($result)){
 						if ($row['sms_label']=='Birthday') $filter_name='Szülinap';
 						elseif ($row['sms_label']=='Christmas') $filter_name='Karácsony';
 						elseif ($row['sms_label']=='New_Year') $filter_name='Újév';
 						elseif ($row['sms_label']=='Nameday') $filter_name='Névnap';
 						$len = strlen($row['sms_text']);
-					echo "<tr>	
-							<td>$row[sms_id]</td>
-							<td>$row[sms_text]</td>
-							<td>$filter_name</td>	
-							<td>$len</td>
-						";
-					
+					?> 
+						<tr>	
+							<td><?php echo $row['sms_id']?></td>
+							<td><?php echo $row['sms_text']?></td>
+							<td><?php echo $filter_name?></td>	
+							<td><?php echo $len ?></td>
+					<?php 					
 					$i++;
 					}
 				/* fancy no result */
-				} else {
-					echo "<div class='body_border'>
+				} else {?>
+					<div class='body_border'>
 							<table width=100%>
 								<tr>
 									<th width=5%>ID</th>
-									<th width=80%>$numOfRows SMS közül választhatsz</th>
-									<th>T�pus</th>
+									<th width=80%><?php echo $numOfRows ?> SMS közül választhatsz</th>
+									<th>Típus</th>
 								</tr>
 								<tr>
 									<td colspan=3>Sajnos nincs a keresésnek megfelelő üzenet a rendszerünkben <br>
 									jobb alul találod a beküldés gombot *kacsint*</td>
-								</tr>";
+								</tr>
+				<?php 
 				}
-}
-			
+			}
+
 			$connection->close();
 			?>
-		</div>
-		</div>
-
+						</table>
+					</table>
+				</div>
+			</div>
 	</body>
-
 </html>
 	

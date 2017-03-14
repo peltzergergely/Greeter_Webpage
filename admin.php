@@ -52,7 +52,7 @@
 		</div>
 
 			</form>			
-			<div class='body_border'>
+		<div class='body_border'>
 				<table width=100%>
 								<tr>
 									<th width=5%>ID</th>
@@ -61,7 +61,7 @@
 									<th width=4%>Nyelv</th>
 									<th width=4%>Approved</th>
 									<th>Hossz</th>
-									<th>M</th>										
+									<th></th>										
 									<th></th>
 									<th></th>
 								</tr>
@@ -97,6 +97,7 @@
 			<!-- submit form -->
 
 			<?php
+			ob_start();
 			include "adminsession.php";
 	
 				/* making the search variable here and checking if it's set */
@@ -136,7 +137,7 @@
 			}
 			
 			if(isset($_POST['addsms'])) {
-				if(isset($_POST['sms_id'])) {
+				if(isset($_POST['sms_id']) AND $_POST['sms_id']!='') {
 					$sms_id=$_POST['sms_id'];
 					if(isset($_POST['sms_text'])){
 						$sms_text=$_POST['sms_text'];
@@ -144,7 +145,6 @@
 						$sms_lang=$_POST['sms_lang'];
 						$sms_appr=$_POST['sms_appr'];
 						$sql = "UPDATE Message SET sms_text='$sms_text', sms_language='$sms_lang', sms_label='$sms_label', approved='$sms_appr' WHERE sms_id='$sms_id'";
-						//echo $sql;
 						$result = mysqli_query($connection, $sql) or die("Something is fishy");
 					}else echo "sms szöveg hiányzik";
 				}else{
@@ -152,11 +152,13 @@
 						$sms_text=$_POST['sms_text'];
 						$sms_label=$_POST['sms_label'];
 						$sms_lang=$_POST['sms_lang'];
-						$sms_appr=$_POST['sms_appr'];
+						$sms_appr=$_POST['sms_appr'];						
 						$sql = "INSERT INTO Message (sms_text, sms_language, sms_label, approved) VALUES ('$sms_text', '$sms_lang', '$sms_label', '$sms_appr')";
+						//echo "$sql";
 						$result = mysqli_query($connection, $sql) or die("Something is fishy");
 					}else echo "sms szöveg hiányzik";
 				}
+				header('Location: '.$_SERVER['PHP_SELF']); 
 			}
 			
 			
@@ -179,9 +181,9 @@
 						else $filter_name=$row['sms_label'];
 						
 						if ($row['approved']=='0') $appr='Nem'; else $appr='Igen';
-						$len = strlen($row['sms_text']);
 						
 						if ($row['sms_language']=='hu') $lang='HUN'; else $lang='ENG';
+
 						$len = strlen($row['sms_text']);
 						
 					echo "
@@ -193,9 +195,11 @@
 							<td width=4%>$lang</td>
 							<td width=4%>$appr</td>
 							<td width=5%>$len</td>
-							<form method=post>
-							<td width=7%><button type='submit' name='appr_sms' value=\"$row[sms_id]\"/>Jóváhagy</button></td>
-							<td width=7%><button type='submit' name='delete_sms' value=\"$row[sms_id]\"/>Törlés</button></td>
+							<form method=post>";
+								if ($row['approved']=='0')  echo "<td width=7%><button type='submit' class='button_appr' name='appr_sms' value=\"$row[sms_id]\"/>Jóváhagy</button></td>";
+								else echo "<td></td>";
+					echo "		
+							<td width=7%><button type='submit' name='delete_sms' class='button_del' value=\"$row[sms_id]\"/>Törlés</button></td>
 							</form>
 						";
 					
@@ -208,12 +212,14 @@
 						$sms_id = $_POST['delete_sms'];
 						$sql="DELETE FROM Message WHERE sms_id = '$sms_id'";
 						$result = mysqli_query($connection, $sql) or die("Something is fishy");
+						header('Location: '.$_SERVER['PHP_SELF']);
 					}
 					
 					if (isset($_POST['appr_sms'])) {
 						$sms_id = $_POST['appr_sms'];
 						$sql = "UPDATE Message SET approved='1' WHERE sms_id= '$sms_id'";
 						$result = mysqli_query($connection, $sql) or die("Something is fishy");
+						header('Location: '.$_SERVER['PHP_SELF']);
 					}
 					
 				/* fancy no result */
