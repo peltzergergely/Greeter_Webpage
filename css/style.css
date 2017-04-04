@@ -73,6 +73,23 @@ tr:nth-child(even) {
 	box-shadow: 1px 1px 25px black;		
 }
 
+.lang_hu {
+	content:url(res/Hungary-Flag.png);
+	position: absolute;
+	top:5%;
+	right:1%;
+	float: right;
+	margin-right: 20px;
+	margin-top: 30px;
+	border-radius:100%;
+	height:50px;
+	box-shadow: 1px 1px 10px black;		
+}
+
+.lang_hu:hover {
+	box-shadow: 1px 1px 25px black;		
+}
+
 .info {
 	position: absolute;
 	left: 0;

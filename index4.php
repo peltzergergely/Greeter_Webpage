@@ -78,7 +78,7 @@
 							}?>							
 					</div>			
 				</div>
-				
+							<!--  ------------------ site input START ------------------ -->
 				<div class="container_web">
 					<div class="submit_web"><span>Expand</span></div>
 						<div class="content_web">
@@ -96,9 +96,9 @@
 									/* output data for each row */
 										$i=1;					
 									?>
-												<tr class="out">
-													<th class="out">Eddig beküldött hasonló oldalak</th>
-												</tr>
+												
+													Eddig beküldött hasonló oldalak
+												
 									<?php 
 										while($row = mysqli_fetch_assoc($result)){
 									?>

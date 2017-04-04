@@ -108,14 +108,14 @@
 				/* SEARCHING IS HAPPENING FROM HERE seems like done, searches with labels and text*/
 			if ($search!='' and $search!="Keresés az sms-ek között") {
 					$sql = "SELECT * FROM Message WHERE sms_text LIKE '%$search%'";
-					if (is_array($_POST['chkbox'])) {
-						$sql .= " AND";
+					if (isset($_POST['chkbox'])) {
+						$sql .= " AND (";
 						foreach($_POST['chkbox'] AS $value) {
 							$sql .= " sms_label='{$value}' OR ";
 							//echo $sql;
 						}
 						$sql  = substr($sql, 0, -4);
-						//$sql .= " ORDER BY sms_label";
+						$sql .= ")";
 						//echo "query if= " . $sql . "<br /><br />";
 					} 				
 					print_result($connection, $sql);

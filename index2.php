@@ -200,12 +200,14 @@
 										quote: "<?php echo $row['sms_text']?>" ,    
 										link: "http://greeter.hostei.com/",    
 										caption: "A világ legismertebb üdvözletküldő oldala",    
-										actions: {"name":"Üdvözlet", "link":"http://greeter.hostei.com/"}	  }, 
-										function( response ) {  } );}
+										actions: {"name":"Üdvözlet", "link":"http://greeter.hostei.com/"}}, 
+										function( response ) {  
+										} 
+										);}
 										
-										$(#tableId tr).ready(function(){  
-										$(this).children("td").('button.share-btn').on( 'click', fb_share );
-										});
+										$(document).ready(function(){
+										$('.share-btn').on( 'click', fb_share );
+								});
 								</script>
 							</td>
 					<?php 					

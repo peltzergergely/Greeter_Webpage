@@ -1,9 +1,10 @@
 * {
 	font-family: 'Roboto', sans-serif;
 	src: url(https://fonts.googleapis.com/css?family=Roboto:500);
-
 	}
-
+	a {
+		color: white;
+	}
 body {
 	background-color: Gainsboro;
 	overflow: visible;
