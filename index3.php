@@ -182,13 +182,13 @@
 						elseif ($row['sms_label']=='Christmas') $filter_name='Karácsony';
 						elseif ($row['sms_label']=='New_Year') $filter_name='Újév';
 						elseif ($row['sms_label']=='Nameday') $filter_name='Névnap';
-						$len = strlen($row['sms_text']);
+						$len = strlen($row['sms_text']);						$rowlen = strlen($row['sms_text']);
 					?> 
 						<tr>	
 							<td><?php echo $row['sms_id']?></td>
 							<td><?php echo $row['sms_text']?></td>
 							<td><?php echo $filter_name?></td>	
-							<td><?php echo $len ?></td>
+							<td><?php echo $len ?></td>							<td><?php echo $rowlen ?></td>
 					<?php 					
 					$i++;
 					}

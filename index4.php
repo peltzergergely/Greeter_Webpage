@@ -9,7 +9,7 @@
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" src="css/script.js"></script>
 	</head>
-	<body>
+	<body>	<script>  window.fbAsyncInit = function() {    FB.init({      appId      : '182349362274094',      xfbml      : true,      version    : 'v2.8'    });    FB.AppEvents.logPageView();  };  (function(d, s, id){     var js, fjs = d.getElementsByTagName(s)[0];     if (d.getElementById(id)) {return;}     js = d.createElement(s); js.id = id;     js.src = "//connect.facebook.net/en_US/sdk.js";     fjs.parentNode.insertBefore(js, fjs);   }(document, 'script', 'facebook-jssdk'));</script>
 						<!-- ------------------ header ------------------ -->
 		<div class="headerB">
 			<h1>GREETER</h1>
@@ -174,7 +174,7 @@
 									<th width=5%>ID</th>
 									<th><?php echo $numOfRows ?> SMS közül választhatsz</th>
 									<th width=12%>Típus</th>
-									<th>Hossz</th>
+									<th>Hossz</th>									<th>Megosztás</th>
 								</tr>								
 					<?php 
 						while($row = mysqli_fetch_assoc($result)){
@@ -182,13 +182,32 @@
 						elseif ($row['sms_label']=='Christmas') $filter_name='Karácsony';
 						elseif ($row['sms_label']=='New_Year') $filter_name='Újév';
 						elseif ($row['sms_label']=='Nameday') $filter_name='Névnap';
-						$len = strlen($row['sms_text']);
+						$len = strlen($row['sms_text']);						$roww = ($row['sms_text']);
 					?> 
-						<tr>	
+						<tr>															
 							<td><?php echo $row['sms_id']?></td>
 							<td><?php echo $row['sms_text']?></td>
 							<td><?php echo $filter_name?></td>	
-							<td><?php echo $len ?></td>
+							<td><?php echo $len ?></td>							
+							<td>
+								<div class="well">  
+									<button class="btn btn-info share-btn">Share</button></div>
+								<script type="text/javascript">
+								function fb_share(){  
+									FB.ui( {  
+										method: 'feed',    
+										name: "Greeter - Ünnepi köszöntések",	
+										quote: "<?php echo $row['sms_text']?>" ,    
+										link: "http://greeter.hostei.com/",    
+										caption: "A világ legismertebb üdvözletküldő oldala",    
+										actions: {"name":"Üdvözlet", "link":"http://greeter.hostei.com/"}	  }, 
+										function( response ) {  } );}
+										
+										$(#tableId tr).ready(function(){  
+										$(this).children("td").('button.share-btn').on( 'click', fb_share );
+										});
+								</script>
+							</td>
 					<?php 					
 					$i++;
 					}
@@ -213,7 +232,7 @@
 						</table>
 					</table>
 				</div>
-			</div>
-	</body>
+			</div>				
+	</body>	
 </html>
 	
